@@ -9,6 +9,10 @@ data = pd.read_excel(file_path)
 if not all(col in data.columns for col in ['Frame', 'Text', 'Pourcentage']):
     st.error("Le fichier Excel doit contenir les colonnes 'Frame', 'Text' et 'Pourcentage'.")
 else:
+    # Initialiser l'état de session pour l'historique si ce n'est pas déjà fait
+    if 'historique' not in st.session_state:
+        st.session_state['historique'] = []
+
     # Titre de l'application
     st.title("Recherche de textes en CUSTOM BATTLE (SparkingZero)")
 
@@ -27,20 +31,45 @@ else:
         if not selected_row.empty:
             frame_value = selected_row['Frame'].values[0]
             percentage_value = selected_row['Pourcentage'].values[0]
-             # Afficher le texte avec une taille de police plus grande
+
+            # Afficher le texte avec une taille de police plus grande
             st.markdown(f"""
             <p style='font-size:24px;'><strong style='color:green;'>Texte :</strong> {selected_item}</p>
             <p style='font-size:24px;'><strong style='color:green;'>Pourcentage (+/-) :</strong> {percentage_value}</p>
             """, unsafe_allow_html=True)
+
+            # Ajouter un bouton "Stocker dans l'historique"
+            if st.button("Stocker dans l'historique"):
+                st.session_state['historique'].append({
+                    "Texte": selected_item,
+                    "Pourcentage": percentage_value
+                })
+
             st.markdown(f"\n\n")
             st.markdown(f"\n\n")
             st.markdown(f"\n\n")
             # Texte rouge en mode indication
             st.markdown("<span style='color:yellow; font-weight: bold;'>GUIDE D'UTILISATION :\n\n-Il ne faut utiliser aucun filtre\n\n-Il faut garder l'indication \"Tout\" en dessous du terme Légendes comme montré sur l'image ci-dessous.\n\n-Une fois que vous aurez recherché votre terme voulu, la liste contiendra toutes les occurrences de ce terme parmi les 5000+ légendes disponibles.\n\n-Le POURCENTAGE associé indique l'endroit jusqu'auquel il vous faudra scroller pour arriver à votre terme souhaité PAR RAPPORT A L'ECHELLE de la barre latérale de scroll.\n\n-En d'autres termes, si le pourcentage lié à votre texte indique 79%, cela veut dire qu'il faut scroller à peu près jusqu'aux trois quarts de la barre (en passant par en bas c'est plus facile donc).\n\n</span>", unsafe_allow_html=True)
+            
+            # Texte rouge en mode indication
             st.markdown("<span style='color:red; font-weight: bold;'>NB : Il y a encore certaines imprécisions mais ça devrait grandement vous aider à créer vos CUSTOM BATTLE sans passer 24h à chercher une phrase/un mot.</span>", unsafe_allow_html=True)
+
             # Ajouter une image
-            image_path = 'guide.png'  # chemin de l'image
+            image_path = 'guide.png'  # Spécifiez le chemin de votre image
             st.image(image_path, caption="Image GUIDE", use_column_width=True)
 
     else:
         st.write("Aucun élément sélectionné.")
+    # Bouton pour vider l'historique
+    if st.sidebar.button("Vider l'historique"):
+        st.session_state['historique'] = []  # Réinitialiser l'historique
+    # Afficher l'historique sur le côté
+    st.sidebar.title("Historique des sélections")
+    if st.session_state['historique']:
+        for item in st.session_state['historique']:
+            st.sidebar.markdown(f"{item['Texte']}")
+            st.sidebar.markdown(f"**Pourcentage :** {item['Pourcentage']}")
+            st.sidebar.markdown("<hr>", unsafe_allow_html=True)  # Ajouter une ligne horizontale entre les éléments
+    else:
+        st.sidebar.write("Aucun historique pour le moment.")
+
