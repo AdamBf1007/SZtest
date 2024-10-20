@@ -36,10 +36,10 @@ else:
             st.markdown(f"\n\n")
             st.markdown(f"\n\n")
             # Texte rouge en mode indication
-            st.markdown("<span style='color:yellow; font-weight: bold;'>GUIDE D'UTILISATION :\n\n-Il ne faut utiliser aucun filtre\n\n-Il faut garder l'indication \"Tout\" en dessous du terme Légendes comme montré sur l'image ci-dessous.\n\n-Une fois que vous aurez recherché votre terme voulu, la liste contiendra toutes les occurrences de ce terme parmi les 5000+ légendes disponibles.\n\n-Le POURCENTAGE associé indique l'endroit jusqu'auquel il vous faudra scroller pour arriver à votre terme souhaité PAR RAPPORT A L'ECHELLE de la barre latérale de scroll.\n\n-En d'autres termes, si le pourcentage lié à votre texte indique 79%, cela veut dire qu'il faut scroller à peu près jusqu'aux trois quarts de la barre (en passant par en bas c'est plus facile donc).\n\nNB : Il y a encore certaines imprécisions mais ça devrait grandement vous aider à créer vos CUSTOM BATTLE sans passer 24h à chercher une phrase/un mot.</span>", unsafe_allow_html=True)
+            st.markdown("<span style='color:yellow; font-weight: bold;'>GUIDE D'UTILISATION :\n\n-Il ne faut utiliser aucun filtre\n\n-Il faut garder l'indication \"Tout\" en dessous du terme Légendes comme montré sur l'image ci-dessous.\n\n-Une fois que vous aurez recherché votre terme voulu, la liste contiendra toutes les occurrences de ce terme parmi les 5000+ légendes disponibles.\n\n-Le POURCENTAGE associé indique l'endroit jusqu'auquel il vous faudra scroller pour arriver à votre terme souhaité PAR RAPPORT A L'ECHELLE de la barre latérale de scroll.\n\n-En d'autres termes, si le pourcentage lié à votre texte indique 79%, cela veut dire qu'il faut scroller à peu près jusqu'aux trois quarts de la barre (en passant par en bas c'est plus facile donc).\n\n</span>", unsafe_allow_html=True)
             st.markdown("<span style='color:red; font-weight: bold;'>NB : Il y a encore certaines imprécisions mais ça devrait grandement vous aider à créer vos CUSTOM BATTLE sans passer 24h à chercher une phrase/un mot.</span>", unsafe_allow_html=True)
             # Ajouter une image
-            image_path = 'guide.png'  # Spécifiez le chemin de votre image
+            image_path = 'guide.png'  # chemin de l'image
             st.image(image_path, caption="Image GUIDE", use_column_width=True)
 
     else:
